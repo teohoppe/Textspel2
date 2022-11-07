@@ -56,6 +56,8 @@ def fight (monster, player):
 
         if monster.hp<=0:
             print(f'Bra du dödade {monster.name}')
+            player.coins += random.randint(10,20)
+            print(f"{monster.name} droppade lite coins när du döda den\nDu har nu {player.coins} styckna coins")
         else:
             print (f'Bra du attackerar {monster.name}, dess nya hp är {monster.hp}') 
     
@@ -70,7 +72,7 @@ def bossbattle(monster, player):
         time.sleep(1.5)
         
         time.sleep(1.5)
-        player_1.hp = monsterslag(monster, player.hp) 
+        player.hp = monsterslag(monster, player.hp) 
         if player.hp <= 0:
             print(f"{monster.name} dödade dig")
             exit()
@@ -91,12 +93,11 @@ def bossbattle(monster, player):
             exit()
 
         if  monster.hp <= 0:
-            print('Grattis du dödade bossen, den droppar en helig dryck som sätter din hälsa till 100% och ökar din skada med 50%')
-            player.damage = player.damage * 1.5             
-            player.hp = 100
+            player.coins += 50
+            print(f"Grattis du dödade {monster.name}, han droppade 50 coins du har nu {player.coins}")
         else:
              print (f'Bra du attackerar {monster.name}, dess nya hp är {monster.hp}')
-        
+    shop(player_1)        
     return player.hp
 
 def monsterslag(monster, player):
@@ -145,11 +146,10 @@ def shop(player):
         while True:
             print(f"Du har {player.coins} coins att spendera\n-")
             buy = int(input("Tryck (1) för att ta en närmare titt på Healpotions\n-\nTryck (2) för att ta en närmare titt på attackpotion\n-\nTryck (3) för att ta en närmare titt på armor\n-\nFör att använda heal eller attackpotion tryck (5)\n-\nFör att lämna shopen tryck (9)\n"))
-
-            #print("Här kan kan du köpa massa olika saker, så som healpotion, attackpotion och armor")
             print("-\n-\n-\n")
+            
             if buy == 1:
-                print(f"Du har {player.healpotion} styckna healpotion\nEn healpotion kostar 10 coins du har {player_1.coins}\n")
+                print(f"Du har {player.healpotion} styckna healpotion\nEn healpotion kostar 10 coins du har {player.coins}\n")
                 buy_heal = input("Om du vill köpa healpotion skriv Köp annars skriv Avbryt\n").lower()
                 if buy_heal == "köp" and player.coins >=10:
                     player.healpotion += 1
@@ -161,7 +161,7 @@ def shop(player):
                 else: 
                     print("Du har tyvär inte råd, din fattiga jävel")
             elif buy == 2:
-                print(f"Du har {player.attackpotion} styckna attackpotion\nEn attackpotion kostar 15 coins du har {player_1.coins}\n")
+                print(f"Du har {player.attackpotion} styckna attackpotion\nEn attackpotion kostar 15 coins du har {player.coins}\n")
                 buy_attack = input("Om du vill köpa healpotion skriv Köp annars skriv Avbryt\n").lower()
                 if buy_attack == "köp" and player.coins >15:
                     player.attackpotion += 1
@@ -184,7 +184,7 @@ def shop(player):
                 else: 
                     print("Du har tyvär inte råd, din fattiga jävel")
             elif buy == 5:
-                healpotion(player_1)
+                healpotion(player_1)        #måste fixa den här lite så den ser bättre ut
                 attackpotion(player_1)
             elif buy == 9:
                 print("Du lämna shopet\n-\nVälkomen åter")    
@@ -242,6 +242,8 @@ elif vapen == 4:
     player_1.damage = 1
 else:
     exit()
+
+bossbattle(BossMonster, player_1)
 
 wait()
 
