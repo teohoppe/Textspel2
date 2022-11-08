@@ -72,7 +72,7 @@ def bossbattle(monster, player):
         time.sleep(1.5)
         
         time.sleep(1.5)
-        player.hp = monsterslag(monster, player.hp) 
+        player.hp = monsterslag(monster, player) 
         if player.hp <= 0:
             print(f"{monster.name} dödade dig")
             exit()
